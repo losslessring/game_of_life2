@@ -45,25 +45,25 @@
 } */
 
 .Blue {
-    height: 100px;
-    width: 100px;
+    height: 50px;
+    width: 50px;
     background-color: blue;
 }
 
 .Red {
-  height: 100px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
   background-color: red;
 }
 
 .Green {
-  height: 100px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
   background-color: green;
 }
 
 .Empty {
-  height: 100px;
-  width: 100px;
-  background-color: grey;
+  height: 50px;
+  width: 50px;
+  background-color: lightgrey;
 }

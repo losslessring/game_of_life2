@@ -13,7 +13,8 @@ export default function Cell(props) {
     //   border: '5px solid green',
     // }}>
     <div className={props.color}>
-      </div>
+    {props.index}
+    </div>
       
       // <div className="Blue">Hello World</div>
     

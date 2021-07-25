@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react"
-import { generateField} from '../../utils/generateField.js'
-import { getRandomItem} from '../../utils/getRandomItem.js'
 import Cell from '../Cell/Cell.jsx'
+
+import { generateField } from '../../utils/generateField.js'
+import { getRandomItem } from '../../utils/getRandomItem.js'
+import { coordsToArrayIndex } from '../../utils/coordsToArrayIndex.js'
+import { getNeighbours } from '../../utils/getNeighbours.js'
 
 const Field = () => {
     const colors = ["Empty", "Green"]
@@ -19,6 +22,12 @@ const Field = () => {
                                             gap: '2px'
                                         })
     useEffect(() => console.log(grid))
+    useEffect(() => grid.map(cell => {
+                                //console.log(coordsToArrayIndex(cell.x, cell.y, cols))
+                                console.log(getNeighbours(cell.x, cell.y, cols, rows, "index", grid))
+                                return console.log(cell)
+                            
+                            }))
     return (
     <div style={styleObj}>
         {grid.map((component) => (

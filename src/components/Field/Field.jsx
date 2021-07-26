@@ -10,30 +10,30 @@ import { calculateNextGenerationField } from "../../engine/calculateNextGenerati
 
 const Field = () => {
     const colors = ["Empty", "Green"]
-    const [rows, setRows] = useState(10)
-    const [cols, setCols] = useState(10)
-    const [grid, setGrid] = useState(generateField(rows, cols, "color", colors, getRandomItem))
+    const [rows, setRows] = useState(() => 50)
+    const [cols, setCols] = useState(() => 50)
+    const [grid, setGrid] = useState(() => generateField(rows, cols, "color", colors, getRandomItem))
     
-    const [count, setCount] = useState(0)
-    const [delay, setDelay] = useState(100)
-    const [isPlaying, setPlaying] = useState(false)
-    const [styleObj, setStyle] = useState({
+    const [count, setCount] = useState(() => 0)
+    const [delay, setDelay] = useState(() => 100)
+    const [isPlaying, setPlaying] = useState(() => false)
+    const [styleObj, setStyle] = useState(() => ({
                                             display: 'grid',
-                                            gridTemplateRows: `repeat(${rows}, 50px)`,
-                                            gridTemplateColumns: `repeat(${cols}, 50px)`,
+                                            gridTemplateRows: `repeat(${rows}, 10px)`,
+                                            gridTemplateColumns: `repeat(${cols}, 10px)`,
                                             justifyItems: 'center',
                                             border: '5px solid lightGrey',
                                             color: '#ffffff',
                                             backgroundColor: 'lightGrey',
                                             gap: '2px'
-                                        })
+                                        }))
 
     useInterval(
             () => {
                     // Your custom logic here
-                    setCount(count + 1)
+                    setCount(prevCount => prevCount + 1)
                     //setGrid(generateField(rows, cols, "color", colors, getRandomItem))
-                    setGrid(calculateNextGenerationField(grid, cols, rows))
+                    setGrid(prevGridState => calculateNextGenerationField(prevGridState, cols, rows))
             },
             // Delay in milliseconds or null to stop it
             isPlaying ? delay : null,
@@ -43,17 +43,11 @@ const Field = () => {
         setDelay(Number(event.target.value))
       }
     
-    
-    //useEffect(() => console.log(grid))
-    // useEffect(() => grid.map((cell, index) => {
-    //                             const neighbours = getNeighbours(cell.x, cell.y, cols, rows, "index", grid)
-    //                             const color = calculateNextGeneration(cell, neighbours)
-    //                             return {...cell, color}
-    //                             }))
-        
-                            
-
-                            
+    const restartGame = () => {
+        setCount(prevCount => 0)
+        setGrid((prevGridState) => generateField(rows, cols, "color", colors, getRandomItem))
+    }                            
+                     
     return (
         <div>
             <div style={styleObj}>
@@ -61,10 +55,16 @@ const Field = () => {
                         <Cell key={component.index} index={component.index} color={component.color} />
                 ))}
             </div>
-            <h1>Steps {count}</h1>
-            <button onClick={() => setPlaying(!isPlaying)}>
+            <h1 className="Counter">Steps {count}</h1>
+            
+            <button className="Button" onClick={() => setPlaying(!isPlaying)}>
                 {isPlaying ? 'pause' : 'play'}
             </button>
+            
+            <button className="Button" onClick={restartGame}>
+                    restart
+            </button>
+            
             <p>
                 <label>Delay: </label>
                 <input type="number" onChange={handleChange} value={delay} />
